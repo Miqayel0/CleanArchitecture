@@ -165,12 +165,7 @@ namespace CleanArch.WebAPI
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "MyStaticFiles")),
-                        RequestPath = "/StaticFiles"
-            });
+            app.UseStaticFiles();
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
