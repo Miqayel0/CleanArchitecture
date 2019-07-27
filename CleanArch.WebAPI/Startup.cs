@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CleanArch.Domain.Entities;
+using CleanArch.infra.IoC;
 using CleanArch.Infra.Data.Auth;
 using CleanArch.Infra.Data.Constants;
 using CleanArch.Infra.Data.Context;
@@ -138,6 +139,8 @@ namespace CleanArch.WebAPI
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -163,6 +166,11 @@ namespace CleanArch.WebAPI
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
+            DependencyContainer.RegisterServices(services);
         }
     }
 }
