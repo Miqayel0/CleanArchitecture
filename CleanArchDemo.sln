@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.WebAPI", "CleanAr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Domain", "CleanArch.Domain\CleanArch.Domain.csproj", "{35A93615-2C39-442B-865F-C07B2498DB8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArch.Infra.Data", "CleanArch.Infra.Data\CleanArch.Infra.Data.csproj", "{F33A2223-2620-4EEF-9977-97D65082983B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Infra.Data", "CleanArch.Infra.Data\CleanArch.Infra.Data.csproj", "{F33A2223-2620-4EEF-9977-97D65082983B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArch.Application", "CleanArch.Application\CleanArch.Application.csproj", "{946A5EE8-44B5-40B3-A232-5AB8922065D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{F33A2223-2620-4EEF-9977-97D65082983B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F33A2223-2620-4EEF-9977-97D65082983B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F33A2223-2620-4EEF-9977-97D65082983B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{946A5EE8-44B5-40B3-A232-5AB8922065D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{946A5EE8-44B5-40B3-A232-5AB8922065D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{946A5EE8-44B5-40B3-A232-5AB8922065D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{946A5EE8-44B5-40B3-A232-5AB8922065D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{ED8E968B-7643-4AC6-B826-1761C1B98F90} = {0E0EBB80-1221-49A3-BF4F-19D27BB74D3F}
 		{35A93615-2C39-442B-865F-C07B2498DB8B} = {C0261ED8-1478-4DD3-AC26-01FFE156024C}
 		{F33A2223-2620-4EEF-9977-97D65082983B} = {AEB25A12-0477-40BC-B606-A8F0ADF84337}
+		{946A5EE8-44B5-40B3-A232-5AB8922065D2} = {D50A35C3-A791-4551-9C56-19B8E2C83D3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF2C87B-389D-45DE-BF75-DF067818FAE8}
