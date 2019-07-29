@@ -22,7 +22,7 @@ namespace CleanArch.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CourseDto>>> Get()
         {
-            return Ok(await _courseService.GetCourse());
+            return Ok(await _courseService.GetCourses());
         }
 
         [HttpGet("{id}")]
