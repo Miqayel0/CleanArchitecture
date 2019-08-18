@@ -2,9 +2,8 @@
 using CleanArch.Domain.Interfaces;
 using CleanArch.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CleanArch.Infra.Data.Repository
@@ -22,9 +21,9 @@ namespace CleanArch.Infra.Data.Repository
             await _context.Courses.AddAsync(course);
         }
 
-        public async Task<IEnumerable<Course>> GetCourses()
+        public async Task<IEnumerable<Course>> GetCourses(CancellationToken cancellationToken)
         {
-            return await _context.Courses.ToListAsync();
+            return await _context.Courses.ToListAsync(cancellationToken);
         }
     }
 }

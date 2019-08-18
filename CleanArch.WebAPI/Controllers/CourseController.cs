@@ -32,8 +32,11 @@ namespace CleanArch.WebAPI.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] CourseDto requset)
         {
+            await _courseService.Create(requset);
+
+            return Ok();
         }
 
         [HttpPut("{id}")]

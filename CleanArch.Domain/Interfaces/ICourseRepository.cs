@@ -8,7 +8,7 @@ namespace CleanArch.Domain.Interfaces
 {
     public interface ICourseRepository
     {
-        Task<IEnumerable<Course>> GetCourses();
+        Task<IEnumerable<Course>> GetCourses(System.Threading.CancellationToken cancellationToken);
         Task Add(Course course);
     }
 }

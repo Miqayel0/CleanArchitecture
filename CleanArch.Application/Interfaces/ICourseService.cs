@@ -8,7 +8,7 @@ namespace CleanArch.Application.Interfaces
 {
     public interface ICourseService
     {
-        Task<CouresViewModel> GetCourses();
-        Task Create(CouresViewModel couresViewModel);
+        Task<IEnumerable<CourseDto>> GetCourses();
+        Task Create(CourseDto course);
     }
 }

@@ -1,5 +1,4 @@
-﻿using CleanArch.Domain.Commands;
-using CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
 using MediatR;
 using System;
@@ -8,14 +7,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArch.Domain.CommandHandlers
+namespace CleanArch.Domain.Courses.Commads.CreateCourse
 {
-    public class CourseCommandHandler : IRequestHandler<CreateCourseCommand, bool>
+    public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, bool>
     {
         private readonly ICourseRepository _courseRepository;
-        public CourseCommandHandler(ICourseRepository courseRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public CreateCourseCommandHandler(ICourseRepository courseRepository, IUnitOfWork unitOfWork)
         {
             _courseRepository = courseRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<bool> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
         {
@@ -27,6 +28,7 @@ namespace CleanArch.Domain.CommandHandlers
             };
 
             await _courseRepository.Add(course);
+            await _unitOfWork.Complete(cancellationToken);
 
             return true;
         }

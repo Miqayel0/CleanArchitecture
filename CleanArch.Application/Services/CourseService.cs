@@ -1,47 +1,42 @@
-﻿using CleanArch.Application.Dtos;
+﻿using AutoMapper;
+using CleanArch.Application.Dtos;
 using CleanArch.Application.Interfaces;
-using CleanArch.Domain.Commands;
 using CleanArch.Domain.Core.Bus;
-using CleanArch.Domain.Interfaces;
-using System;
+using CleanArch.Domain.Courses.Commads.CreateCourse;
+using CleanArch.Domain.Courses.Queries.GetCourses;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CleanArch.Application.Services
 {
     public class CourseService : ICourseService
     {
-        private readonly ICourseRepository _courseRepository;
         private readonly IMediatorHandler _bus;
-
-        public CourseService(ICourseRepository courseRepository, IMediatorHandler bus)
+        private readonly IMapper _mapper;
+        public CourseService(IMediatorHandler bus, IMapper mapper)
         {
-            _courseRepository = courseRepository;
             _bus = bus;
+            _mapper = mapper;
         }
 
-        public async Task Create(CouresViewModel couresViewModel)
+        public async Task Create(CourseDto courses)
         {
-            var createCourseCommand = new CreateCourseCommand(
-                    couresViewModel.Name,
-                    couresViewModel.Description,
-                    couresViewModel.ImageUrl
-                );
+            var createCourseCommand = new CreateCourseCommand
+            {
+                Name = courses.Name,
+                Description = courses.Description,
+                ImageUrl = courses.ImageUrl
+            };
 
             await _bus.Send(createCourseCommand);
         }
 
-        public async Task<CouresViewModel> GetCourses()
+        public async Task<IEnumerable<CourseDto>> GetCourses()
         {
-            var courses = await _courseRepository.GetCourses();
+            var courses = await _bus.Send(new GetCouresesQuery());
+            var coursesDto = _mapper.Map<IEnumerable<CourseDto>>(courses);
 
-            var model = new CouresViewModel
-            {
-                Courses = new List<CourseDto>()
-            };
-
-            return model;
+            return coursesDto;
         }
     }
 }

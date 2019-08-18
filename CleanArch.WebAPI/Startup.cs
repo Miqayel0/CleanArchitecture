@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using CleanArch.Application.Mapper;
 using CleanArch.Domain.Entities;
 using CleanArch.infra.IoC;
 using CleanArch.Infra.Data.Auth;
@@ -121,7 +124,7 @@ namespace CleanArch.WebAPI
 
             services.AddMediatR(typeof(Startup));
 
-            //services.AddAutoMapper();
+            services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

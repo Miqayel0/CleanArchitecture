@@ -1,20 +1,22 @@
 ﻿using CleanArch.Domain.Interfaces;
+using CleanArch.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CleanArch.Infra.Data.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DbContext _context;
+        private readonly UniversityDbContext _context;
 
-        public UnitOfWork(DbContext context)
+        public UnitOfWork(UniversityDbContext context)
         {
             _context = context;
         }
 
-        public async Task Complete()
+        public async Task Complete(CancellationToken cancellationToken)
         {
 
             foreach (var entry in _context.ChangeTracker.Entries())
@@ -37,7 +39,14 @@ namespace CleanArch.Infra.Data.Repository
 
             }
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
