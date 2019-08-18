@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CleanArch.Domain.Core.Commands;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CleanArch.Application.Dtos
+namespace CleanArch.Domain.Courses.Commads.UpdateCourse
 {
-    public class CourseDto
+    public class UpdateCourseCommand : Command<bool> 
     {
         public int Id { get; set; }
         public string Name { get; set; }

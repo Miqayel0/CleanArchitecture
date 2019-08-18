@@ -39,6 +39,8 @@ namespace CleanArch.WebAPI
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -46,6 +48,16 @@ namespace CleanArch.WebAPI
         {
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddDbContext<UniversityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                    builderr => builderr.AllowAnyMethod()
+                                        .AllowAnyHeader()
+                                        .AllowCredentials()
+                                        .WithOrigins("http://localhost:3000")
+                                        .WithOrigins("http://localhost:3001"));
+            });
 
             var authSettings = Configuration.GetSection(nameof(AuthSettings));
             services.Configure<AuthSettings>(authSettings);
@@ -162,6 +174,8 @@ namespace CleanArch.WebAPI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseSwaggerUI(c =>
             {

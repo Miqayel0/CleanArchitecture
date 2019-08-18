@@ -10,5 +10,6 @@ namespace CleanArch.Application.Interfaces
     {
         Task<IEnumerable<CourseDto>> GetCourses();
         Task Create(CourseDto course);
+        Task Update(CourseDto requset);
     }
 }

@@ -10,5 +10,7 @@ namespace CleanArch.Domain.Interfaces
     {
         Task<IEnumerable<Course>> GetCourses(System.Threading.CancellationToken cancellationToken);
         Task Add(Course course);
+        Task Update(Course course);
+        Task<Course> GetById(int id);
     }
 }

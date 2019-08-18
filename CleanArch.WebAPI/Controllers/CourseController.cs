@@ -40,8 +40,12 @@ namespace CleanArch.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] CourseDto requset)
         {
+            await _courseService.Update(requset);
+
+            return Ok();
+
         }
 
         [HttpDelete("{id}")]
