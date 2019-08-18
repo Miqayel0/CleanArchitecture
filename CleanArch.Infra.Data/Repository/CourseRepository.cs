@@ -16,6 +16,12 @@ namespace CleanArch.Infra.Data.Repository
         {
             _context = context;
         }
+
+        public async Task Add(Course course)
+        {
+            await _context.Courses.AddAsync(course);
+        }
+
         public async Task<IEnumerable<Course>> GetCourses()
         {
             return await _context.Courses.ToListAsync();
