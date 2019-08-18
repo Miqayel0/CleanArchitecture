@@ -1,13 +1,11 @@
 ﻿using CleanArch.Domain.Core.Commands;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using CleanArch.Domain.Core.Events;
 using System.Threading.Tasks;
 
 namespace CleanArch.Domain.Core.Bus
 {
     public interface IMediatorHandler
     {
-        Task SendCommand<T>(T commad) where T : Command;
+        Task<TResponse> Send<TResponse>(Message<TResponse> massage);
     }
 }

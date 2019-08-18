@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CleanArch.Domain.Core.Events
 {
-    public abstract class Message : IRequest<bool>
+    public abstract class Message<TResponse> : IRequest<TResponse>
     {
         public string MessageType { get; protected set; }
 

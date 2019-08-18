@@ -29,7 +29,7 @@ namespace CleanArch.Application.Services
                     couresViewModel.ImageUrl
                 );
 
-            await _bus.SendCommand(createCourseCommand);
+            await _bus.Send(createCourseCommand);
         }
 
         public async Task<CouresViewModel> GetCourses()

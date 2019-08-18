@@ -11,6 +11,7 @@ using CleanArch.Infra.Data.Constants;
 using CleanArch.Infra.Data.Context;
 using CleanArch.Infra.Data.Identity;
 using CleanArch.WebAPI.Models.Settings;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -118,6 +119,7 @@ namespace CleanArch.WebAPI
             identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
             identityBuilder.AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
 
+            services.AddMediatR(typeof(Startup));
 
             //services.AddAutoMapper();
 
