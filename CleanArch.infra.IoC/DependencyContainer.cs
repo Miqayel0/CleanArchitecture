@@ -3,6 +3,7 @@ using CleanArch.Application.Services;
 using CleanArch.Domain.Core.Bus;
 using CleanArch.Domain.Courses.Commads.CreateCourse;
 using CleanArch.Domain.Courses.Commads.UpdateCourse;
+using CleanArch.Domain.Courses.Queries.GetCourseById;
 using CleanArch.Domain.Courses.Queries.GetCourses;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
@@ -26,6 +27,7 @@ namespace CleanArch.infra.IoC
             services.AddScoped<IRequestHandler<CreateCourseCommand, bool>, CreateCourseCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateCourseCommand, bool>, UpdateCourseCommandHandler>();
             services.AddScoped<IRequestHandler<GetCouresesQuery, IEnumerable<Course>>, GetCoursesQueryHandler>();
+            services.AddScoped<IRequestHandler<GetCourseByIdQuery, Course>, GetCourseByIdQueryHandler>();
 
             // Application Layer
             services.AddScoped<ICourseService, CourseService>();

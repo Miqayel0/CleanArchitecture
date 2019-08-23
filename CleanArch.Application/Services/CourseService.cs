@@ -4,7 +4,9 @@ using CleanArch.Application.Interfaces;
 using CleanArch.Domain.Core.Bus;
 using CleanArch.Domain.Courses.Commads.CreateCourse;
 using CleanArch.Domain.Courses.Commads.UpdateCourse;
+using CleanArch.Domain.Courses.Queries.GetCourseById;
 using CleanArch.Domain.Courses.Queries.GetCourses;
+using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Threading;
@@ -41,31 +43,15 @@ namespace CleanArch.Application.Services
 
         public async Task Update(CourseDto courses)
         {
-            CancellationToken cancellationToken;
-            var entity = await _courseRepository.GetById(courses.Id);
-
-            await Task.Delay(400);
-            for (int i = 0; i < 100000; i++)
+            var updateCourseCommand = new UpdateCourseCommand
             {
-                entity.Description = courses.Description;
-                entity.Name = courses.Name;
-                entity.ImageUrl = courses.ImageUrl;
+                Id = courses.Id,
+                Name = courses.Name,
+                Description = courses.Description,
+                ImageUrl = courses.ImageUrl
+            };
 
-                await Task.Delay(10);
-                await _unitOfWork.Complete(cancellationToken);
-            }
-
-            await _unitOfWork.Complete(cancellationToken);
-
-            //var updateCourseCommand = new UpdateCourseCommand
-            //{
-            //    Id = courses.Id,
-            //    Name = courses.Name,
-            //    Description = courses.Description,
-            //    ImageUrl = courses.ImageUrl
-            //};
-
-            //await _bus.Send(updateCourseCommand);
+            await _bus.Send(updateCourseCommand);
         }
 
 
@@ -77,6 +63,12 @@ namespace CleanArch.Application.Services
             var coursesDto = _mapper.Map<IEnumerable<CourseDto>>(courses);
 
             return coursesDto;
+        }
+
+        public async Task<IEnumerable<CourseDto>> GetCourseById(int id)
+        {
+            var courses = await _bus.Send(new GetCourseByIdQuery() { Id = id});
+            return _mapper.Map<IEnumerable<CourseDto>>(courses);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace CleanArch.Domain.Interfaces
         Task<IEnumerable<Course>> GetCourses(System.Threading.CancellationToken cancellationToken);
         Task Add(Course course);
         Task Update(Course course);
+        Task UpdateRange(IEnumerable<Course> courses);
         Task<Course> GetById(int id);
     }
 }

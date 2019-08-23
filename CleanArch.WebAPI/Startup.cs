@@ -18,15 +18,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -58,6 +54,8 @@ namespace CleanArch.WebAPI
                                         .WithOrigins("http://localhost:3000")
                                         .WithOrigins("http://localhost:3001"));
             });
+
+            services.AddMemoryCache();
 
             var authSettings = Configuration.GetSection(nameof(AuthSettings));
             services.Configure<AuthSettings>(authSettings);

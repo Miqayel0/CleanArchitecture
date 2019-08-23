@@ -48,5 +48,17 @@ namespace CleanArch.Infra.Data.Repository
                 throw new Exception(ex.Message);
             }
         }
+
+        public void Complete()
+        {
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

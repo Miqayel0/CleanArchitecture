@@ -26,6 +26,13 @@ namespace CleanArch.Infra.Data.Repository
             await Task.FromResult(_context.Courses.Update(course));
         }
 
+        public async Task UpdateRange(IEnumerable<Course> courses)
+        {
+            _context.Courses.UpdateRange(courses);
+            await Task.CompletedTask;
+        }
+
+
         public async Task<IEnumerable<Course>> GetCourses(CancellationToken cancellationToken)
         {
             return await _context.Courses.ToListAsync(cancellationToken);

@@ -26,10 +26,11 @@ namespace CleanArch.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<IEnumerable<CourseDto>>> Get(int id)
         {
-            return "value";
+            return Ok(await _courseService.GetCourseById(id));
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CourseDto requset)
@@ -42,6 +43,8 @@ namespace CleanArch.WebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] CourseDto requset)
         {
+            requset.Id = id;
+
             await _courseService.Update(requset);
 
             return Ok();

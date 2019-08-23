@@ -9,5 +9,6 @@ namespace CleanArch.Domain.Interfaces
     public interface IUnitOfWork
     {
         Task Complete(CancellationToken cancellationToken);
+        void Complete();
     }
 }
