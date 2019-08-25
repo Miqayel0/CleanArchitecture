@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using CleanArch.Application.Mapper;
+using CleanArch.Application.Services;
+using CleanArch.Domain.Core.AuthMessage;
 using CleanArch.Domain.Entities;
 using CleanArch.infra.IoC;
 using CleanArch.Infra.Data.Auth;
@@ -19,6 +21,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -90,6 +93,7 @@ namespace CleanArch.WebAPI
 
             services.AddAuthentication(options =>
             {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
@@ -122,6 +126,7 @@ namespace CleanArch.WebAPI
             var identityBuilder = services.AddIdentityCore<User>(o =>
             {
                 // configure identity options
+                o.SignIn.RequireConfirmedEmail = true;
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;
                 o.Password.RequireUppercase = false;
@@ -130,7 +135,13 @@ namespace CleanArch.WebAPI
             });
 
             identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
+            identityBuilder.AddRoleValidator<RoleValidator<IdentityRole>>();
+            identityBuilder.AddRoleManager<RoleManager<IdentityRole>>();
+            identityBuilder.AddSignInManager<SignInManager<User>>();
             identityBuilder.AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
+
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMediatR(typeof(Startup));
 
