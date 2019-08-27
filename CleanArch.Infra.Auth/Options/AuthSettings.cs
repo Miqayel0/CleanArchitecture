@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CleanArch.WebAPI.Models.Settings
+namespace CleanArch.Infra.Auth.Options
 {
     public class AuthSettings
     {

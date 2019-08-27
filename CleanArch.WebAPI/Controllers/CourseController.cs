@@ -33,7 +33,7 @@ namespace CleanArch.WebAPI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CourseDto requset)
+        public async Task<ActionResult> Post([FromBody] CourseDto requset)
         {
             await _courseService.Create(requset);
 
@@ -41,14 +41,12 @@ namespace CleanArch.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] CourseDto requset)
+        public async Task<ActionResult> Put(int id, [FromBody] CourseDto requset)
         {
             requset.Id = id;
-
             await _courseService.Update(requset);
 
             return Ok();
-
         }
 
         [HttpDelete("{id}")]

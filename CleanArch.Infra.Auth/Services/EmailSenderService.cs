@@ -1,15 +1,15 @@
-﻿using CleanArch.Domain.Core.AuthMessage;
+﻿using CleanArch.Infra.Auth.Options;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
 
-namespace CleanArch.Application.Services
+namespace CleanArch.Infra.Auth.Services
 {
-    public class EmailSender : IEmailSender
+    public class EmailSenderService : IEmailSender
     {
-        public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor)
+        public EmailSenderService(IOptions<AuthMessageSenderOptions> optionsAccessor)
         {
             Options = optionsAccessor.Value;
         }

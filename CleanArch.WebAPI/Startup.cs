@@ -7,15 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using CleanArch.Application.Mapper;
-using CleanArch.Application.Services;
-using CleanArch.Domain.Core.AuthMessage;
 using CleanArch.Domain.Entities;
 using CleanArch.infra.IoC;
-using CleanArch.Infra.Data.Auth;
-using CleanArch.Infra.Data.Constants;
+using CleanArch.Infra.Auth.Constants;
+using CleanArch.Infra.Auth.Options;
+using CleanArch.Infra.Auth.Services;
 using CleanArch.Infra.Data.Context;
 using CleanArch.Infra.Data.Identity;
-using CleanArch.WebAPI.Models.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -119,7 +117,7 @@ namespace CleanArch.WebAPI
             // api user claim policy
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.JwtClaimIdentifiers.Rol, Constants.JwtClaims.ApiAccess));
             });
 
             // add identity
@@ -141,7 +139,7 @@ namespace CleanArch.WebAPI
             identityBuilder.AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
 
             services.Configure<AuthMessageSenderOptions>(Configuration);
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, EmailSenderService>();
 
             services.AddMediatR(typeof(Startup));
 

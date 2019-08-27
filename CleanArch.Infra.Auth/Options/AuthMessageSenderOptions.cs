@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CleanArch.Domain.Core.AuthMessage
+namespace CleanArch.Infra.Auth.Options
 {
     public class AuthMessageSenderOptions
     {

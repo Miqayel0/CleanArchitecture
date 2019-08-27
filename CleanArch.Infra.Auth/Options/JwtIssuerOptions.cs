@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArch.Infra.Data.Auth
+namespace CleanArch.Infra.Auth.Options
 {
     public class JwtIssuerOptions
     {
