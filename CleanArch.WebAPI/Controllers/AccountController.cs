@@ -29,7 +29,7 @@ namespace CleanArch.WebAPI.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
@@ -58,11 +58,9 @@ namespace CleanArch.WebAPI.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult> Login(LoginDto input)
+        public async Task<ActionResult<AccountDto>> Login(LoginDto input)
         {
-            await _accountService.Login(input);
-
-            return Ok();
+            return Ok(await _accountService.Login(input));
         }
 
 

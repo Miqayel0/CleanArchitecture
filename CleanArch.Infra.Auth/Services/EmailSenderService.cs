@@ -1,4 +1,5 @@
-﻿using CleanArch.Infra.Auth.Options;
+﻿using CleanArch.Application.Interfaces;
+using CleanArch.Infra.Auth.Options;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using SendGrid;

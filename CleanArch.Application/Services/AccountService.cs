@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Dtos.Account;
+using CleanArch.Application.Interfaces;
 using CleanArch.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -11,22 +12,25 @@ using System.Threading.Tasks;
 
 namespace CleanArch.Application.Services
 {
-    public class AccountService
+    public class AccountService : IAccountService
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IJwtFactory _jwtFactory;
         private readonly ILogger _logger;
 
         public AccountService(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
+            IJwtFactory jwtFactory,
             IEmailSender emailSender,
             ILogger<AccountService> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _jwtFactory = jwtFactory;
             _logger = logger;
         }
 
@@ -64,14 +68,14 @@ namespace CleanArch.Application.Services
             }
         }
 
-        public async Task Login(LoginDto input)
+        public async Task<AccountDto> Login(LoginDto input)
         {
             //find user first...
             var user = await _userManager.FindByNameAsync(input.Email);
 
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{user.Id}'."); ;
+                throw new ApplicationException($"Unable to load user with ID '{user.Id}'.");
             }
 
             //validate password...
@@ -83,6 +87,32 @@ namespace CleanArch.Application.Services
                 throw new ApplicationException($"Invalid username or password"); ;
             }
 
+            var token = await _jwtFactory.GenerateEncodedToken(user.Id, user.UserName);
+
+            return new AccountDto
+            {
+                Name = user.Name,
+                Surname = user.Surname,
+                Email = user.Email,
+                AccessToken = token
+            };
+        }
+
+        public async Task<AccountDto> GetAccount(string input)
+        {
+            var user = await _userManager.FindByIdAsync(input);
+
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{user.Id}'.");
+            }
+
+            return new AccountDto
+            {
+                Name = user.Name,
+                Surname = user.Surname,
+                Email = user.Email,
+            };
         }
 
     }

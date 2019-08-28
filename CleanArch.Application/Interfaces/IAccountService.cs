@@ -10,6 +10,7 @@ namespace CleanArch.Application.Interfaces
     {
         Task<RegisterOutDto> Register(RegisterDto input);
         Task ConfirmEmail(ConfirmEmailDto input);
-        Task Login(LoginDto input);
+        Task<AccountDto> Login(LoginDto input);
+        Task<AccountDto> GetAccount(string input);
     }
 }

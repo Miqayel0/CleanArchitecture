@@ -7,11 +7,11 @@ using CleanArch.Domain.Courses.Queries.GetCourseById;
 using CleanArch.Domain.Courses.Queries.GetCourses;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
+using CleanArch.Infra.Auth.Services;
 using CleanArch.Infra.Bus;
 using CleanArch.Infra.Data.Context;
 using CleanArch.Infra.Data.Repository;
 using MediatR;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 
@@ -31,12 +31,13 @@ namespace CleanArch.infra.IoC
             services.AddScoped<IRequestHandler<GetCourseByIdQuery, Course>, GetCourseByIdQueryHandler>();
 
             // Application Layer
-
             services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             // Persistence Layer
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IJwtFactory, JwtFactory>();
             services.AddScoped<UniversityDbContext>();
         }
     }
