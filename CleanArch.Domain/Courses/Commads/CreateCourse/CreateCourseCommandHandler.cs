@@ -13,10 +13,13 @@ namespace CleanArch.Domain.Courses.Commads.CreateCourse
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IUnitOfWork _unitOfWork;
-        public CreateCourseCommandHandler(ICourseRepository courseRepository, IUnitOfWork unitOfWork)
+        private readonly IMediator _mediator;
+
+        public CreateCourseCommandHandler(ICourseRepository courseRepository, IUnitOfWork unitOfWork, IMediator mediator)
         {
             _courseRepository = courseRepository;
             _unitOfWork = unitOfWork;
+            _mediator = mediator;
         }
         public async Task<bool> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
         {
@@ -29,6 +32,7 @@ namespace CleanArch.Domain.Courses.Commads.CreateCourse
 
             await _courseRepository.Add(course);
             await _unitOfWork.Complete(cancellationToken);
+            await _mediator.Publish(new CourseCreated { CourseId = course.Id });
 
             return true;
         }

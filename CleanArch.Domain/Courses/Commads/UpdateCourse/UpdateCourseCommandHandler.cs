@@ -28,16 +28,9 @@ namespace CleanArch.Domain.Courses.Commads.UpdateCourse
                 throw new NotFoundException(nameof(Course), request.Id);
             }
 
-            await Task.Delay(4000);
-            for (int i = 0; i < 100000; i++)
-            {
-                entity.Description = request.Description;
-                entity.Name = request.Name;
-                entity.ImageUrl = request.ImageUrl;
-
-                await Task.Delay(100);
-                await _unitOfWork.Complete(cancellationToken);
-            }
+            entity.Description = request.Description;
+            entity.Name = request.Name;
+            entity.ImageUrl = request.ImageUrl;
 
             await _unitOfWork.Complete(cancellationToken);
 

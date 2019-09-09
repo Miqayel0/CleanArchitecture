@@ -17,14 +17,12 @@ namespace CleanArch.Application.Services
     public class CourseService : ICourseService
     {
         private readonly IMediatorHandler _bus;
-        private readonly ICourseRepository _courseRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CourseService(IMediatorHandler bus, IMapper mapper, ICourseRepository courseRepository, IUnitOfWork unitOfWork)
+        public CourseService(IMediatorHandler bus, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _bus = bus;
             _mapper = mapper;
-            _courseRepository = courseRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -57,9 +55,7 @@ namespace CleanArch.Application.Services
 
         public async Task<IEnumerable<CourseDto>> GetCourses()
         {
-            CancellationToken cancellationToken;
-            //var courses = await _bus.Send(new GetCouresesQuery());
-            var courses = await _courseRepository.GetCourses(cancellationToken);
+            var courses = await _bus.Send(new GetCouresesQuery());
             var coursesDto = _mapper.Map<IEnumerable<CourseDto>>(courses);
 
             return coursesDto;

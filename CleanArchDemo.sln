@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Domain.Core", "Cl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra.Auth", "infra.Auth", "{3955A8EF-B479-4343-B68D-7347A3ECA222}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArch.Infra.Auth", "CleanArch.Infra.Auth\CleanArch.Infra.Auth.csproj", "{F3689813-9B7A-44A3-9480-BB5F3085D2E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Infra.Auth", "CleanArch.Infra.Auth\CleanArch.Infra.Auth.csproj", "{F3689813-9B7A-44A3-9480-BB5F3085D2E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

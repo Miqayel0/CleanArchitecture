@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -26,6 +27,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -114,14 +116,27 @@ namespace CleanArch.WebAPI
                         return Task.CompletedTask;
                     }
                 };
-            }).AddGoogle(options =>
+            }).AddOpenIdConnect("Google", o =>
             {
                 IConfigurationSection googleAuthNSection =
                     Configuration.GetSection("Authentication:Google");
 
-                options.ClientId = googleAuthNSection["ClientId"];
-                options.ClientSecret = googleAuthNSection["ClientSecret"];
+                o.ClientId = googleAuthNSection["ClientId"];
+                o.ClientSecret = googleAuthNSection["ClientSecret"];
+                o.Authority = "https://accounts.google.com";
+                o.ResponseType = OpenIdConnectResponseType.Code;
+                o.CallbackPath = "/signin-google"; // Or register the default "/sigin-oidc"
+                o.Scope.Add("email");
             });
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            //.AddGoogle(options =>
+            //{
+            //    IConfigurationSection googleAuthNSection =
+            //        Configuration.GetSection("Authentication:Google");
+
+            //    options.ClientId = googleAuthNSection["ClientId"];
+            //    options.ClientSecret = googleAuthNSection["ClientSecret"];
+            //});
 
             // api user claim policy
             services.AddAuthorization(options =>
